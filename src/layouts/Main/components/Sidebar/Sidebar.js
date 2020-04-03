@@ -44,6 +44,11 @@ const Sidebar = props => {
 
   const pages = [
     {
+      title: 'Login',
+      href: '/login',
+      icon: <PeopleIcon />
+    },
+    {
       title: 'Dashboard',
       href: '/dashboard',
       icon: <DashboardIcon />
@@ -103,7 +108,7 @@ const Sidebar = props => {
           className={classes.nav}
           pages={pages}
         />
-        <UpgradePlan />
+        {/* <UpgradePlan /> */}
       </div>
     </Drawer>
   );

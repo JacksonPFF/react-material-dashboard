@@ -14,8 +14,11 @@ import {
   Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView
+  NotFound as NotFoundView,
 } from './views';
+
+import { LoginPage } from './_LoginPage';
+import { HomePage } from '_HomePage/HomePage';
 
 const Routes = () => {
   return (
@@ -26,7 +29,19 @@ const Routes = () => {
         to="/dashboard"
       />
       <RouteWithLayout
-        component={DashboardView}
+        component={SignInView}
+        exact
+        layout={MinimalLayout}
+        path="/login"
+      />
+      <RouteWithLayout
+        component={LoginPage}
+        exact
+        layout={MinimalLayout}
+        path="/login-old"
+      />
+      <RouteWithLayout
+        component={HomePage}
         exact
         layout={MainLayout}
         path="/dashboard"

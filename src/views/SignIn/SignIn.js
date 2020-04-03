@@ -18,7 +18,7 @@ import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
 const schema = {
   email: {
     presence: { allowEmpty: false, message: 'is required' },
-    email: true,
+    email: false,
     length: {
       maximum: 64
     }
@@ -242,43 +242,9 @@ const SignIn = props => {
                   color="textSecondary"
                   gutterBottom
                 >
-                  Sign in with social media
+                  with username or email address
                 </Typography>
-                <Grid
-                  className={classes.socialButtons}
-                  container
-                  spacing={2}
-                >
-                  <Grid item>
-                    <Button
-                      color="primary"
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <FacebookIcon className={classes.socialIcon} />
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <GoogleIcon className={classes.socialIcon} />
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Typography
-                  align="center"
-                  className={classes.sugestion}
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  or login with email address
-                </Typography>
+
                 <TextField
                   className={classes.textField}
                   error={hasError('email')}
@@ -286,7 +252,7 @@ const SignIn = props => {
                   helperText={
                     hasError('email') ? formState.errors.email[0] : null
                   }
-                  label="Email address"
+                  label="Username or Email address"
                   name="email"
                   onChange={handleChange}
                   type="text"
@@ -318,7 +284,7 @@ const SignIn = props => {
                 >
                   Sign in now
                 </Button>
-                <Typography
+                {/* <Typography
                   color="textSecondary"
                   variant="body1"
                 >
@@ -330,7 +296,7 @@ const SignIn = props => {
                   >
                     Sign up
                   </Link>
-                </Typography>
+                </Typography> */}
               </form>
             </div>
           </div>
