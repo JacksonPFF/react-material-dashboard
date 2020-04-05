@@ -4,10 +4,17 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { AppBar, Toolbar } from '@material-ui/core';
+import { PFFLogoSvg } from '../../../../_components';
 
 const useStyles = makeStyles(() => ({
   root: {
     boxShadow: 'none'
+  },
+  logoWhite : {
+    width: 116,
+    '& svg': {
+      fill: '#fff'
+    }
   }
 }));
 
@@ -24,11 +31,11 @@ const Topbar = props => {
       position="fixed"
     >
       <Toolbar>
-        <RouterLink to="/">
-          <img
-            alt="Logo"
-            src="/images/logos/logo--white.svg"
-          />
+        <RouterLink 
+          className={classes.logoWhite}
+          to="/"
+        >
+          <PFFLogoSvg />
         </RouterLink>
       </Toolbar>
     </AppBar>
