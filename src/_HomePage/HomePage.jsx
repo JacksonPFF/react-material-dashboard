@@ -6,9 +6,34 @@ import Moment from 'moment';
 import { registeredGitasActions } from '../_actions';
 import { skipCodeConstants } from '../_constants';
 
+import { makeStyles } from '@material-ui/styles';
+import {
+  Grid,
+  Button,
+  IconButton,
+  TextField,
+  Link,
+  Typography,
+  List,
+  ListItem,
+} from '@material-ui/core';
+import { SearchInput } from 'components';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(4),
+    backgroundColor: theme.palette.background.default,
+    height: '100%'
+  },
+  grid: {
+    height: '100%'
+  }
+}));
 
 function HomePage(props) {
   const { registeredGitas, skipCode, dispatch } = props;
+
+  const classes = useStyles();
 
   useEffect(() => {
     dispatch(registeredGitasActions.getAll());
@@ -24,8 +49,8 @@ function HomePage(props) {
     const objects = registeredGitas.items;
     const results = {};
     results.gitas = _.filter(objects, (gita) => // each gita
-                      _.filter(_.values(gita), (gitaPropertyValue) => // each value on in gita
-                        _.includes(gitaPropertyValue.toLowerCase(), searchText.toLowerCase())).length > 0);
+      _.filter(_.values(gita), (gitaPropertyValue) => // each value on in gita
+        _.includes(gitaPropertyValue.toLowerCase(), searchText.toLowerCase())).length > 0);
     // update store with filtered list
     dispatch(registeredGitasActions.filterItems(results));
   }
@@ -35,38 +60,63 @@ function HomePage(props) {
       <React.Fragment>
         {registeredGitas.filteredItems.map((gita) => (
           <li key={gita.serial} className="mb-3">
-            <div>
+            <Typography
+              variant="body1"
+            >
               <b>Serial:</b> {gita.serial}
-            </div>
-            <div>
+            </Typography>
+            <Typography
+              variant="body1"
+            >
               <b>Name:</b> {gita.name}
-            </div>
-            <div>
+            </Typography>
+            <Typography
+              variant="body1"
+            >
               <b>Registered by:</b> {gita.registeredByUsername}
-            </div>
-            <div>
+            </Typography>
+            <Typography
+              variant="body1"
+            >
               <b>Email:</b> {gita.registeredByEmail}
-            </div>
-            <div>
+            </Typography>
+            <Typography
+              variant="body1"
+            >
               <b>Date:</b> {Moment(gita.created).format('DD/MM/YYYY')}
-            </div>
+            </Typography>
           </li>))}
       </React.Fragment>
     );
   }
 
   return (
-    <div className="row">
-      <div className="col-md-6 col-lg-3">
-        <div className="sticky-top">
-          <h4>Registered Gitas</h4>
-          <p>From secure api endpoint</p>
+    <div className={classes.root}>
+      <Grid
+        className={classes.grid}
+        container
+        spacing={4}
+      >
+        <Grid
+          item
+          lg={3}
+        >
+          <Typography
+            variant="h4"
+          >
+            Registered Gitas
+          </Typography>
+          <Typography
+            variant="subtitle2"
+          >
+            From secure api endpoint
+          </Typography>
 
-          <input
+          <SearchInput
             className="filter form-control mb-3"
             onInput={handleSearchInput}
-            type="text"
             placeholder="Search for..."
+            type="text"
           />
 
           {registeredGitas.loading && <em>Loading registered gitas...</em>}
@@ -76,22 +126,42 @@ function HomePage(props) {
               {registeredGitas.error}
             </span>}
           {registeredGitas.filteredItems &&
-          <div>
-            <ul className="list-unstyled">
-              {registeredGitaListItem()}
-            </ul>
-          </div>}
-        </div>
-      </div>
-
-      <div className="d-none d-lg-block col-md-3" />
-
-      <div className="col-md-6 col-lg-3 mt-3 mt-sm-0">
-        <h4> Wifi Skip Code </h4>
-        <p className="mb-0">Updates every 15 minutes.</p>
-        <p>Valid for 30 minutes.</p>
-        <h1><b>{skipCode.data}</b></h1>
-      </div>
+            <div>
+              <List className="list-unstyled">
+                {registeredGitaListItem()}
+              </List>
+            </div>}
+        </Grid>
+        <Grid
+          item
+          lg={3}
+        />
+        <Grid
+          item
+          lg={3}
+        >
+          <Typography
+            variant="h4"
+          >
+            Wifi Skip Code
+          </Typography>
+          <Typography
+            variant="subtitle2"
+          >
+            Updates every 15 minutes.
+          </Typography>
+          <Typography
+            variant="subtitle2"
+          >
+            Valid for 30 minutes.
+          </Typography>
+          <Typography
+            variant="h1"
+          >
+            <b>{skipCode.data}</b>
+          </Typography>
+        </Grid>
+      </Grid>
     </div>
   );
 }
