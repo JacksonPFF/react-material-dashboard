@@ -6,7 +6,9 @@ import { makeStyles } from '@material-ui/styles';
 import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
-import InputIcon from '@material-ui/icons/Input';
+// import InputIcon from '@material-ui/icons/Input';
+import { userActions } from '../../../../_actions';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +23,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Topbar = props => {
-  const { className, onSidebarOpen, ...rest } = props;
+  const { className, onSidebarOpen, dispatch, ...rest } = props;
+
+  function handleLogout(e) {
+    e.preventDefault();
+    dispatch(userActions.logout());
+  }
 
   const classes = useStyles();
 
@@ -50,12 +57,20 @@ const Topbar = props => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton
-            className={classes.signOutButton}
-            color="inherit"
+
+          <RouterLink
+            className="nav-link"
+            onClick={handleLogout}
+            to="/"
           >
-            <InputIcon />
-          </IconButton>
+            <IconButton
+              className={classes.signOutButton}
+              color="inherit"
+            >
+              Sign out
+            </IconButton>
+          </RouterLink>
+
         </Hidden>
         <Hidden lgUp>
           <IconButton
@@ -75,4 +90,16 @@ Topbar.propTypes = {
   onSidebarOpen: PropTypes.func
 };
 
-export default Topbar;
+
+function mapStateToProps(state) {
+  const { authentication } = state;
+  const { user } = authentication;
+  return {
+    user,
+  };
+}
+
+// withRouter();
+const connectedTopbar = connect(mapStateToProps)(Topbar);
+//export { connectedTopbar as Topbar };
+export default connectedTopbar;

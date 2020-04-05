@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { userActions } from '../../_actions';
+
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
@@ -126,7 +129,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history } = props;
+  const { history, alert, loggingIn, user, dispatch } = props;
 
   const classes = useStyles();
 
@@ -172,8 +175,22 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    history.push('/');
+    // event.target.className += ' was-validated';
+
+    //setIsSubmitted(!isSubmitted);
+    if (formState.values) {
+      const email = formState.values.email;
+      const password = formState.values.password;
+      dispatch(userActions.login(email, password));
+      // console.log(formState.values);
+    }
   };
+  // useEffect(() => {
+  //   if (user) {
+  //     history.push('/');
+  //   }
+  // }, []); // execute only once
+
 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
@@ -310,4 +327,17 @@ SignIn.propTypes = {
   history: PropTypes.object
 };
 
-export default withRouter(SignIn);
+
+function mapStateToProps(state) {
+  const { alert } = state;
+  const { loggingIn } = state.authentication;
+  const { user } = state.authentication;
+  return {
+    alert,
+    loggingIn,
+    user,
+  };
+}
+
+const connectedSignIn = connect(mapStateToProps)(SignIn);
+export default withRouter(connectedSignIn);

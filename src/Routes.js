@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 
-import { RouteWithLayout } from './components';
+import { ProtectedRouteWithLayout, RouteWithLayout } from './components';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
 import {
@@ -40,61 +40,61 @@ const Routes = () => {
         layout={MinimalLayout}
         path="/login-old"
       />
-      <RouteWithLayout
+      <ProtectedRouteWithLayout
         component={HomePage}
         exact
         layout={MainLayout}
         path="/dashboard"
       />
-      <RouteWithLayout
+      <ProtectedRouteWithLayout
         component={UserListView}
         exact
         layout={MainLayout}
         path="/users"
       />
-      <RouteWithLayout
+      <ProtectedRouteWithLayout
         component={ProductListView}
         exact
         layout={MainLayout}
         path="/products"
       />
-      <RouteWithLayout
+      <ProtectedRouteWithLayout
         component={TypographyView}
         exact
         layout={MainLayout}
         path="/typography"
       />
-      <RouteWithLayout
+      <ProtectedRouteWithLayout
         component={IconsView}
         exact
         layout={MainLayout}
         path="/icons"
       />
-      <RouteWithLayout
+      <ProtectedRouteWithLayout
         component={AccountView}
         exact
         layout={MainLayout}
         path="/account"
       />
-      <RouteWithLayout
+      <ProtectedRouteWithLayout
         component={SettingsView}
         exact
         layout={MainLayout}
         path="/settings"
       />
-      <RouteWithLayout
+      <ProtectedRouteWithLayout
         component={SignUpView}
         exact
         layout={MinimalLayout}
         path="/sign-up"
       />
-      <RouteWithLayout
+      <ProtectedRouteWithLayout
         component={SignInView}
         exact
         layout={MinimalLayout}
         path="/sign-in"
       />
-      <RouteWithLayout
+      <ProtectedRouteWithLayout
         component={NotFoundView}
         exact
         layout={MinimalLayout}
