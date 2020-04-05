@@ -1,9 +1,7 @@
-import React from 'react';
-
-export const PFFLogoSvg = () => (
   <svg
-    alt="Logo"
+    width="142" height="33"
     preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 142 33"
     x="0"
     y="0"
@@ -19,4 +17,3 @@ export const PFFLogoSvg = () => (
       <polygon points="69,0 65,5.4 70.4,5.4 70.4,0" />
     </g>
   </svg>
-);
