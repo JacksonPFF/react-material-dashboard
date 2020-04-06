@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Moment from 'moment';
-import { registeredGitasActions } from '../_actions';
-import { skipCodeConstants } from '../_constants';
+import { registeredGitasActions } from '../../_actions';
+import { skipCodeConstants } from '../../_constants';
 
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -14,7 +14,7 @@ import {
   Box,
   Hidden,
 } from '@material-ui/core';
-import { SearchInput, TypographyWithSpacing } from '../components';
+import { SearchInput, TypographyWithSpacing } from '../../components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -207,4 +207,4 @@ function mapStateToProps(state) {
 }
 
 const connectedHomePage = connect(mapStateToProps)(HomePage);
-export { connectedHomePage as HomePage };
+export default connectedHomePage;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const NotFound404 = () => (
+const NotFound404 = () => (
   // TODO: resolve depency issue for: const location = useLocation();
   <div className="vh-100 d-flex">
     <div className="w-100 align-self-center text-center">
@@ -12,3 +12,5 @@ export const NotFound404 = () => (
     </div>
   </div>
 );
+
+export default NotFound404;

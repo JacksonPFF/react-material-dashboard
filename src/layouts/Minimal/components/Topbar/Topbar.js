@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { AppBar, Toolbar } from '@material-ui/core';
-import { PFFLogoSvg } from '../../../../_components';
+import { PFFLogoSvg } from '../../../../components';
 
 const useStyles = makeStyles(() => ({
   root: {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Moment from 'moment';
-import { otaInfoConstants } from '../_constants';
+import { otaInfoConstants } from '../../_constants';
 
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -14,7 +14,7 @@ import {
   Hidden,
   Typography,
 } from '@material-ui/core';
-import { SearchInput, TypographyWithSpacing, SpanUtility } from '../components';
+import { SearchInput, TypographyWithSpacing, SpanUtility } from '../../components';
 import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -200,4 +200,4 @@ function mapStateToProps(state) {
 }
 
 const connectedOtaInfoPage = connect(mapStateToProps)(OtaInfoPage);
-export { connectedOtaInfoPage as OtaInfoPage };
+export default connectedOtaInfoPage;

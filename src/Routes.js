@@ -17,9 +17,8 @@ import {
   NotFound as NotFoundView,
 } from './views';
 
-import { LoginPage } from './_LoginPage';
-import { HomePage } from '_HomePage/HomePage';
-import { OtaInfoPage } from '_OtaInfoPage/OtaInfoPage';
+import { HomePage, OtaInfoPage } from './views';
+
 
 const Routes = () => {
   return (

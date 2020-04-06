@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { history } from '../_helpers';
-import { userActions } from '../_actions';
-// import '../_scss/LoginPage.scss';
-import { PFFLogoSvg, LoadingGif } from '../_components';
+// import { history } from '../../_helpers';
+import { userActions } from '../../_actions';
+import { PFFLogoSvg, LoadingGif } from '../../components';
 
 function LoginPage(props) {
   // TODO: update propTypes
@@ -102,4 +101,4 @@ function mapStateToProps(state) {
 }
 
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);
-export { connectedLoginPage as LoginPage };
+export default connectedLoginPage;

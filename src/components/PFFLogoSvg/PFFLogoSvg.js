@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const PFFLogoSvg = () => (
+const PFFLogoSvg = () => (
   <svg
     alt="Logo"
     preserveAspectRatio="xMidYMid meet"
@@ -20,3 +20,5 @@ export const PFFLogoSvg = () => (
     </g>
   </svg>
 );
+
+export default PFFLogoSvg;

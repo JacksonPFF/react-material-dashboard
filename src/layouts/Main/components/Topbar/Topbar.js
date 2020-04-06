@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 // import InputIcon from '@material-ui/icons/Input';
 import { userActions } from '../../../../_actions';
 import { connect } from 'react-redux';
-import { PFFLogoSvg } from '../../../../_components';
+import { PFFLogoSvg } from '../../../../components';
 
 const useStyles = makeStyles(theme => ({
   root: {
