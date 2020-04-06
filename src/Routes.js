@@ -19,6 +19,7 @@ import {
 
 import { LoginPage } from './_LoginPage';
 import { HomePage } from '_HomePage/HomePage';
+import { OtaInfoPage } from '_OtaInfoPage/OtaInfoPage';
 
 const Routes = () => {
   return (
@@ -34,17 +35,17 @@ const Routes = () => {
         layout={MinimalLayout}
         path="/login"
       />
-      <RouteWithLayout
-        component={LoginPage}
-        exact
-        layout={MinimalLayout}
-        path="/login-old"
-      />
       <ProtectedRouteWithLayout
         component={HomePage}
         exact
         layout={MainLayout}
         path="/dashboard"
+      />
+      <ProtectedRouteWithLayout
+        component={OtaInfoPage}
+        exact
+        layout={MainLayout}
+        path="/ota-info"
       />
       <ProtectedRouteWithLayout
         component={UserListView}
@@ -88,13 +89,7 @@ const Routes = () => {
         layout={MinimalLayout}
         path="/sign-up"
       />
-      <ProtectedRouteWithLayout
-        component={SignInView}
-        exact
-        layout={MinimalLayout}
-        path="/sign-in"
-      />
-      <ProtectedRouteWithLayout
+      <RouteWithLayout
         component={NotFoundView}
         exact
         layout={MinimalLayout}

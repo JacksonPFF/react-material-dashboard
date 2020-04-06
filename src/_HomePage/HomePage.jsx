@@ -9,21 +9,12 @@ import { skipCodeConstants } from '../_constants';
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
-  Button,
-  IconButton,
-  TextField,
-  Link,
-  Typography,
   List,
-  ListItem,
+  // ListItem,
   Box,
   Hidden,
 } from '@material-ui/core';
-import { SearchInput } from 'components';
-import { spacing } from '@material-ui/system';
-const theme = {
-  spacing: 8,
-}
+import { SearchInput, TypographyWithSpacing } from '../components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -67,31 +58,31 @@ function HomePage(props) {
         {registeredGitas.filteredItems.map((gita) => (
           <li key={gita.serial} >
             <Box mb={2}>
-              <Typography
+              <TypographyWithSpacing
                 variant="body1"
               >
                 <b>Serial:</b> {gita.serial}
-              </Typography>
-              <Typography
+              </TypographyWithSpacing>
+              <TypographyWithSpacing
                 variant="body1"
               >
                 <b>Name:</b> {gita.name}
-              </Typography>
-              <Typography
+              </TypographyWithSpacing>
+              <TypographyWithSpacing
                 variant="body1"
               >
                 <b>Registered by:</b> {gita.registeredByUsername}
-              </Typography>
-              <Typography
+              </TypographyWithSpacing>
+              <TypographyWithSpacing
                 variant="body1"
               >
                 <b>Email:</b> {gita.registeredByEmail}
-              </Typography>
-              <Typography
+              </TypographyWithSpacing>
+              <TypographyWithSpacing
                 variant="body1"
               >
                 <b>Date:</b> {Moment(gita.created).format('DD/MM/YYYY')}
-              </Typography>
+              </TypographyWithSpacing>
             </Box>
           </li>))}
       </React.Fragment>
@@ -110,23 +101,23 @@ function HomePage(props) {
           md={3}
           sm={6}
         >
-          <Typography
+          <TypographyWithSpacing
             gutterBottom
             variant="h4"
           >
             Registered Gitas
-          </Typography>
-          <Typography
+          </TypographyWithSpacing>
+          <TypographyWithSpacing
             variant="subtitle2"
           >
             From secure api endpoint
-          </Typography>
+          </TypographyWithSpacing>
           <Box visibility="hidden">
-            <Typography
+            <TypographyWithSpacing
               gutterBottom
               variant="subtitle2"
             > -
-            </Typography>
+            </TypographyWithSpacing>
           </Box>
           <Box mb={2}>
             <SearchInput
@@ -144,7 +135,7 @@ function HomePage(props) {
             </span>}
           {registeredGitas.filteredItems &&
             <div>
-              <List className="list-unstyled">
+              <List>
                 {registeredGitaListItem()}
               </List>
             </div>}
@@ -160,28 +151,28 @@ function HomePage(props) {
           md={3}
           sm={6}
         >
-          <Typography
+          <TypographyWithSpacing
             gutterBottom
             variant="h4"
           >
             Wifi Skip Code
-          </Typography>
-          <Typography
+          </TypographyWithSpacing>
+          <TypographyWithSpacing
             variant="subtitle2"
           >
             Updates every 15 minutes.
-          </Typography>
-          <Typography
+          </TypographyWithSpacing>
+          <TypographyWithSpacing
             gutterBottom
             variant="subtitle2"
           >
             Valid for 30 minutes.
-          </Typography>
-          <Typography
+          </TypographyWithSpacing>
+          <TypographyWithSpacing
             variant="h1"
           >
             <b>{skipCode.data}</b>
-          </Typography>
+          </TypographyWithSpacing>
         </Grid>
       </Grid>
     </div>

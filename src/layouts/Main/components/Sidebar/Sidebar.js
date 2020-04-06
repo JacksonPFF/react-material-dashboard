@@ -44,13 +44,13 @@ const Sidebar = props => {
 
   const pages = [
     {
-      title: 'Login',
-      href: '/login',
-      icon: <PeopleIcon />
-    },
-    {
       title: 'Dashboard',
       href: '/dashboard',
+      icon: <DashboardIcon />
+    },
+    {
+      title: 'OTA Info',
+      href: '/ota-info',
       icon: <DashboardIcon />
     },
     {
@@ -63,11 +63,11 @@ const Sidebar = props => {
       href: '/products',
       icon: <ShoppingBasketIcon />
     },
-    {
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />
-    },
+    // {
+    //   title: 'Authentication',
+    //   href: '/sign-in',
+    //   icon: <LockOpenIcon />
+    // },
     {
       title: 'Typography',
       href: '/typography',

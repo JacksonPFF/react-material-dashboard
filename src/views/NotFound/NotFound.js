@@ -4,10 +4,11 @@ import { Grid, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(4)
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
   },
   content: {
-    paddingTop: 150,
+    paddingTop: theme.spacing(10),
     textAlign: 'center'
   },
   image: {
@@ -35,11 +36,10 @@ const NotFound = () => {
         >
           <div className={classes.content}>
             <Typography variant="h1">
-              404: The page you are looking for isn’t here
+              404: Page Not Found
             </Typography>
             <Typography variant="subtitle2">
-              You either tried some shady route or you came here by mistake.
-              Whichever it is, try using the navigation
+              Try using the navigation
             </Typography>
             <img
               alt="Under development"
