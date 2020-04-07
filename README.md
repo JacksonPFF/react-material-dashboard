@@ -50,27 +50,27 @@ The documentation for the React Material Kit is can be found [here](https://mate
   ├── _epics
   ├── _reducers
   ├── _services
-	├── assets
-	├── common
-	├── components
-	├── helpers
-	├── icons
-	├── layouts
-	├── theme
-	├── views
-  │	├── _HomePage
-  │	├── _OtaInfoList
-	│	├── Account
-	│	├── Dashboard-OLD
-	│	├── Icons
-	│	├── NotFound
-	│	├── ProductList
-	│	├── Settings
-	│	├── SignIn
-	│	├── SignUp
-	│	├── Typography
-	│	└── UserList
-	├── App.jsx
-	├── index.jsx
-	└── Routes.jsx
+  ├── assets
+  ├── common
+  ├── components
+  ├── helpers
+  ├── icons
+  ├── layouts
+  ├── theme
+  └── views
+    ├── _HomePage
+    ├── _OtaInfoList
+    ├── Account
+    ├── Dashboard-OLD
+    ├── Icons
+    ├── NotFound
+    ├── ProductList
+    ├── Settings
+    ├── SignIn
+    ├── SignUp
+    ├── Typography
+    └── UserList
+├── App.jsx
+├── index.jsx
+└── Routes.jsx
 ```
