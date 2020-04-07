@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { otaInfoConstants } from '../../_constants';
+import { otaInfoConstants } from '_constants';
 import { OtaInfoListItem } from './components';
 
 import { makeStyles } from '@material-ui/styles';
@@ -13,7 +12,8 @@ import {
   Box,
   Hidden,
 } from '@material-ui/core';
-import { SearchInput, TypographyWithSpacing } from '../../components';
+import { SearchInput, TypographyWithSpacing } from 'components';
+import { searchFilter } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,17 +38,19 @@ function OtaInfoPage(props) {
   function handleSearchInput(e) {
     const searchText = e.target.value;
     // We only want to filter based on the properties visible to the user
-    const objects = otaInfo.items.map((item) => ({
+    const visibleProperties = otaInfo.items.map((item) => ({
+      // TODO: Need unique Id for React list key attribute,
+      // but dont really want to filter by it if not visible to user...
+      // can we exclude it from the filter somehow?
+      id: item.id,
       live: item.live,
       versionName: item.versionName,
       versionCode: item.versionCode,
       minimumSupportedAppVersionCode: item.minimumSupportedAppVersionCode,
       created: item.created,
     }));
-    // TODO: search only the properties in the list view
-    const items = _.filter(objects, (ota) => // each ota
-      _.filter(_.values(ota), (otaPropertyValue) => // each value on in ota
-        _.includes(otaPropertyValue.toString().toLowerCase(), searchText.toLowerCase())).length > 0);
+
+    const items = searchFilter(searchText, visibleProperties)
     // update store with filtered list
     dispatch({ type: otaInfoConstants.GETALL_FILTERED_ITEMS, items });
   }
@@ -99,7 +101,7 @@ function OtaInfoPage(props) {
           {otaInfo.filteredItems &&
             <div>
               <List>
-                {OtaInfoListItem(otaInfo)}
+                <OtaInfoListItem otaInfo={otaInfo} />
               </List>
             </div>}
         </Grid>

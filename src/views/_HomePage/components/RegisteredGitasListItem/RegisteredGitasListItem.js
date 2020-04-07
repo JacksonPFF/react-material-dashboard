@@ -3,45 +3,49 @@ import Moment from 'moment';
 import {
   // ListItem,
   Box,
+  Typography,
 } from '@material-ui/core';
-import { TypographyWithSpacing } from '../../../../components';
 
 
-const RegisteredGitasListItem = (registeredGitas) => {
+const RegisteredGitasListItem = (props) => {
+  const { registeredGitas } = props;
+
   return (
     <React.Fragment>
       {registeredGitas.filteredItems.map((gita) => (
         <li key={gita.serial} >
           <Box mb={2}>
-            <TypographyWithSpacing
+            <Typography
               variant="body1"
             >
               <b>Serial:</b> {gita.serial}
-            </TypographyWithSpacing>
-            <TypographyWithSpacing
+            </Typography>
+            <Typography
               variant="body1"
             >
               <b>Name:</b> {gita.name}
-            </TypographyWithSpacing>
-            <TypographyWithSpacing
+            </Typography>
+            <Typography
               variant="body1"
             >
               <b>Registered by:</b> {gita.registeredByUsername}
-            </TypographyWithSpacing>
-            <TypographyWithSpacing
+            </Typography>
+            <Typography
               variant="body1"
             >
               <b>Email:</b> {gita.registeredByEmail}
-            </TypographyWithSpacing>
-            <TypographyWithSpacing
+            </Typography>
+            <Typography
               variant="body1"
             >
               <b>Date:</b> {Moment(gita.created).format('DD/MM/YYYY')}
-            </TypographyWithSpacing>
+            </Typography>
           </Box>
         </li>))}
     </React.Fragment>
   );
 }
+
+// TODO: add propTypes
 
 export default RegisteredGitasListItem;

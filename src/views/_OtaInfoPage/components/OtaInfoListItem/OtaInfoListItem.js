@@ -5,8 +5,9 @@ import {
   Box,
   Typography,
 } from '@material-ui/core';
-import { SpanUtility  } from '../../../../components';
+import { SpanUtility  } from 'components';
 import { useTheme } from '@material-ui/core/styles';
+import { capFirst } from 'helpers';
 
 // PROPERTIES ON OTAs
 //       "deleted": false,
@@ -23,11 +24,9 @@ import { useTheme } from '@material-ui/core/styles';
 //       "created": "2020-03-22T20:03:58.392Z",
 //       "id": "5e77c4aeba7a9d002949d2eb"
 
-function capFirst(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
+const OtaInfoListItem = (props) => {
+  const { otaInfo } = props;
 
-const OtaInfoListItem = (otaInfo) => {
   const theme = useTheme();
   
   return (
@@ -38,7 +37,6 @@ const OtaInfoListItem = (otaInfo) => {
           key={ota.id}
         >
           <Box mb={2}>
-
             <Typography
               variant="body1"
             >
@@ -49,7 +47,6 @@ const OtaInfoListItem = (otaInfo) => {
                 {` ${capFirst(ota.live.toString())}`}
               </SpanUtility>
             </Typography>
-
             <Typography variant="body1">
               <b>Version Name:</b> {ota.versionName}
             </Typography>
@@ -67,5 +64,7 @@ const OtaInfoListItem = (otaInfo) => {
     </React.Fragment>
   );
 }
+
+// TODO: add propTypes
 
 export default OtaInfoListItem;

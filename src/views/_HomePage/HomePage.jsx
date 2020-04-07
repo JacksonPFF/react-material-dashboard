@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { registeredGitasActions } from '../../_actions';
-import { skipCodeConstants } from '../../_constants';
+import { registeredGitasActions } from '_actions';
+import { skipCodeConstants } from '_constants';
 import { RegisteredGitasListItem } from './components';
+import { searchFilter } from 'helpers';
 
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -13,7 +13,8 @@ import {
   Box,
   Hidden,
 } from '@material-ui/core';
-import { SearchInput, TypographyWithSpacing } from '../../components';
+import { SearchInput, TypographyWithSpacing } from 'components';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,12 +42,9 @@ function HomePage(props) {
 
   function handleSearchInput(e) {
     const searchText = e.target.value;
-    // Registered Gitas in redux state
-    const objects = registeredGitas.items;
     const results = {};
-    results.gitas = _.filter(objects, (gita) => // each gita
-      _.filter(_.values(gita), (gitaPropertyValue) => // each value on in gita
-        _.includes(gitaPropertyValue.toLowerCase(), searchText.toLowerCase())).length > 0);
+    // Registered Gitas in redux state
+    results.gitas = searchFilter(searchText, registeredGitas.items);
     // update store with filtered list
     dispatch(registeredGitasActions.filterItems(results));
   }
@@ -98,7 +96,7 @@ function HomePage(props) {
           {registeredGitas.filteredItems &&
             <div>
               <List>
-                {RegisteredGitasListItem(registeredGitas)}
+                <RegisteredGitasListItem registeredGitas={registeredGitas} />
               </List>
             </div>}
         </Grid>
