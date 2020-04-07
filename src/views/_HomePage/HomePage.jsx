@@ -2,15 +2,14 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import Moment from 'moment';
 import { registeredGitasActions } from '../../_actions';
 import { skipCodeConstants } from '../../_constants';
+import { RegisteredGitasListItem } from './components';
 
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
   List,
-  // ListItem,
   Box,
   Hidden,
 } from '@material-ui/core';
@@ -50,43 +49,6 @@ function HomePage(props) {
         _.includes(gitaPropertyValue.toLowerCase(), searchText.toLowerCase())).length > 0);
     // update store with filtered list
     dispatch(registeredGitasActions.filterItems(results));
-  }
-
-  function registeredGitaListItem() {
-    return (
-      <React.Fragment>
-        {registeredGitas.filteredItems.map((gita) => (
-          <li key={gita.serial} >
-            <Box mb={2}>
-              <TypographyWithSpacing
-                variant="body1"
-              >
-                <b>Serial:</b> {gita.serial}
-              </TypographyWithSpacing>
-              <TypographyWithSpacing
-                variant="body1"
-              >
-                <b>Name:</b> {gita.name}
-              </TypographyWithSpacing>
-              <TypographyWithSpacing
-                variant="body1"
-              >
-                <b>Registered by:</b> {gita.registeredByUsername}
-              </TypographyWithSpacing>
-              <TypographyWithSpacing
-                variant="body1"
-              >
-                <b>Email:</b> {gita.registeredByEmail}
-              </TypographyWithSpacing>
-              <TypographyWithSpacing
-                variant="body1"
-              >
-                <b>Date:</b> {Moment(gita.created).format('DD/MM/YYYY')}
-              </TypographyWithSpacing>
-            </Box>
-          </li>))}
-      </React.Fragment>
-    );
   }
 
   return (
@@ -136,7 +98,7 @@ function HomePage(props) {
           {registeredGitas.filteredItems &&
             <div>
               <List>
-                {registeredGitaListItem()}
+                {RegisteredGitasListItem(registeredGitas)}
               </List>
             </div>}
         </Grid>
