@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { errorHandler } from '../_helpers';
+import { errorHandler } from 'helpers';
 
 const logout = () => {
   // remove user from local storage to log user out

@@ -8,7 +8,7 @@ import rootEpic from '../_epics';
 const epicMiddleware = createEpicMiddleware();
 const loggerMiddleware = createLogger();
 
-export function configureStore() {
+const configureStore = () => {
   const store = createStore(
     rootReducer,
     applyMiddleware(
@@ -21,3 +21,5 @@ export function configureStore() {
 
   return store;
 }
+
+export default configureStore;

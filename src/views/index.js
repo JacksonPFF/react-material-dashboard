@@ -1,5 +1,5 @@
 export { default as Account } from './Account';
-export { default as Dashboard } from './Dashboard';
+export { default as Dashboard } from './Dashboard-OLD';
 export { default as Icons } from './Icons';
 export { default as NotFound } from './NotFound';
 export { default as ProductList } from './ProductList';
@@ -10,4 +10,4 @@ export { default as Typography } from './Typography';
 export { default as UserList } from './UserList';
 
 export { default as HomePage } from './_HomePage';
-export { default as OtaInfoPage } from './_OtaInfoPage';
+export { default as OtaInfoList } from './_OtaInfoList';

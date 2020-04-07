@@ -1,10 +1,10 @@
 import axios from 'axios';
 import _ from 'lodash';
-import { authHeader, errorHandler } from '../_helpers';
+import { authHeader, errorHandler } from 'helpers';
 import {
   endpointConstants,
   serialConstants,
-} from '../_constants';
+} from '_constants';
 
 // TODO: convert this entire service to an Epic
 

@@ -2,8 +2,8 @@ import { Observable, from } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { mergeMap, catchError } from 'rxjs/operators';
 import axios from 'axios';
-import { otaInfoConstants } from '../_constants';
-import { authHeader } from '../_helpers';
+import { otaInfoConstants } from '_constants';
+import { authHeader } from 'helpers';
 
 // import 'rxjs';
 

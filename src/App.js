@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { history } from './_helpers';
+import { history } from './helpers';
 import { Chart } from 'react-chartjs-2';
 import { ThemeProvider } from '@material-ui/styles';
 import validate from 'validate.js';
-import { configureStore } from './_helpers';
+import { configureStore } from './helpers';
 
 import { chartjs } from './helpers';
 import theme from './theme';

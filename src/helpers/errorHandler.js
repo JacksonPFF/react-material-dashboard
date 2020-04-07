@@ -1,4 +1,4 @@
-export function errorHandler(error) {
+export default (error) => {
   if (error.response) {
     const { response } = error;
     if (response.statusText !== 'OK') {

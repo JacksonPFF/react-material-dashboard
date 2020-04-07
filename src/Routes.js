@@ -15,10 +15,10 @@ import {
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView,
+  // Custom Views
+  OtaInfoList as OtaInfoListView,
+  HomePage as HomePageView
 } from './views';
-
-import { HomePage, OtaInfoPage } from './views';
-
 
 const Routes = () => {
   return (
@@ -35,16 +35,23 @@ const Routes = () => {
         path="/login"
       />
       <ProtectedRouteWithLayout
-        component={HomePage}
+        component={HomePageView}
         exact
         layout={MainLayout}
         path="/dashboard"
       />
       <ProtectedRouteWithLayout
-        component={OtaInfoPage}
+        component={OtaInfoListView}
         exact
         layout={MainLayout}
         path="/ota-info"
+      />
+
+      <ProtectedRouteWithLayout
+        component={DashboardView}
+        exact
+        layout={MainLayout}
+        path="/theme-dashboard"
       />
       <ProtectedRouteWithLayout
         component={UserListView}

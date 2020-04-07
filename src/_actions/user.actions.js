@@ -1,7 +1,7 @@
-import { userConstants } from '../_constants';
-import { userService } from '../_services';
+import { userConstants } from '_constants';
+import { userService } from '_services';
 import { alertActions } from '.';
-import { history } from '../_helpers';
+import { history } from 'helpers';
 
 // consider renaming this module to "auth.actions"
 function login(email, password) {

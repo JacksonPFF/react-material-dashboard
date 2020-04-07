@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function OtaInfoPage(props) {
+function OtaInfoList(props) {
   const { otaInfo, dispatch } = props;
 
   const classes = useStyles();
@@ -122,7 +122,7 @@ function OtaInfoPage(props) {
   );
 }
 
-OtaInfoPage.propTypes = {
+OtaInfoList.propTypes = {
   otaInfo: PropTypes.shape({
     loading: PropTypes.bool,
     error: PropTypes.string,
@@ -140,5 +140,5 @@ function mapStateToProps(state) {
   };
 }
 
-const connectedOtaInfoPage = connect(mapStateToProps)(OtaInfoPage);
-export default connectedOtaInfoPage;
+const connectedOtaInfoList = connect(mapStateToProps)(OtaInfoList);
+export default connectedOtaInfoList;

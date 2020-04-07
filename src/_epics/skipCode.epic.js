@@ -9,8 +9,8 @@ import {
   catchError,
 } from 'rxjs/operators';
 import axios from 'axios';
-import { skipCodeConstants } from '../_constants';
-import { authHeader } from '../_helpers';
+import { skipCodeConstants } from '_constants';
+import { authHeader } from 'helpers';
 
 
 export const skipCodeEpic = (action$, state$) => {
