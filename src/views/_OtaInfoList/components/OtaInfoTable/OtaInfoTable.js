@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
+import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { makeStyles } from '@material-ui/styles';
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Checkbox,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TablePagination
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Paper from '@material-ui/core/Paper';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 import { SpanUtility } from 'components';
 import { useTheme } from '@material-ui/core/styles';
 import { capFirst } from 'helpers';
+import moment from 'moment';
+import EnhancedTableToolbar from '../EnhancedTableToolbar';
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -47,68 +46,106 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const useStyles = makeStyles(theme => ({
-  root: {},
-  content: {
-    padding: 0
-  },
-  inner: {
-    minWidth: 1050
-  },
-  nameContainer: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  avatar: {
-    marginRight: theme.spacing(2)
-  },
-  actions: {
-    justifyContent: 'flex-end'
-  }
-}));
+const headCells = [
+  { id: 'live', numeric: false, disablePadding: false, label: 'Live' },
+  { id: 'versionName', numeric: true, disablePadding: false, label: 'Version Name' },
+  { id: 'versionCode', numeric: true, disablePadding: false, label: 'Version Code' },
+  { id: 'minimumSupportedAppVersionCode', numeric: true, disablePadding: false, label: 'Min. App Code' },
+  { id: 'date', numeric: true, disablePadding: false, label: 'Date' },
+];
 
-const OtaInfoTable = props => {
-  const { className, otaInfo, ...rest } = props;
-
-  const classes = useStyles();
-  const theme = useTheme();
-
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [rowsPerPage, setRowsPerPage] = useState(3);
-  const [page, setPage] = useState(0);
-
-  const handleSelectAll = event => {
-    const { otaInfo } = props;
-
-    let selectedUsers;
-
-    if (event.target.checked) {
-      selectedUsers = otaInfo.filteredItems.map(ota => ota.id);
-    } else {
-      selectedUsers = [];
-    }
-
-    setSelectedUsers(selectedUsers);
+function EnhancedTableHead(props) {
+  const { classes, order, orderBy, onRequestSort } = props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
   };
 
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedUsers.indexOf(id);
-    let newSelectedUsers = [];
+  return (
+    <TableHead>
+      <TableRow>
+        {headCells.map((headCell) => (
+          <TableCell
+            align={headCell.numeric ? 'right' : 'left'}
+            key={headCell.id}
+            padding={headCell.disablePadding ? 'none' : 'default'}
+            sortDirection={orderBy === headCell.id ? order : false}
+          >
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <span className={classes.visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </span>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
+}
 
-    if (selectedIndex === -1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers, id);
-    } else if (selectedIndex === 0) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
-    } else if (selectedIndex === selectedUsers.length - 1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelectedUsers = newSelectedUsers.concat(
-        selectedUsers.slice(0, selectedIndex),
-        selectedUsers.slice(selectedIndex + 1)
-      );
-    }
+EnhancedTableHead.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
+  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired,
+};
 
-    setSelectedUsers(newSelectedUsers);
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+  paper: {
+    width: '100%',
+    marginBottom: theme.spacing(2),
+  },
+  table: {
+    minWidth: 750,
+  },
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1,
+  },
+}));
+
+// eslint-disable-next-line react/no-multi-comp
+export default function EnhancedTable(props) {
+  const { otaInfo } = props;
+  const rows = otaInfo.filteredItems.map((item) => ({
+    id: item.id,
+    live: item.live,
+    versionName: item.versionName,
+    versionCode: item.versionCode,
+    minimumSupportedAppVersionCode: item.minimumSupportedAppVersionCode,
+    created: item.created,
+  }));
+  // console.log(rows);
+
+  const theme = useTheme();
+  const classes = useStyles();
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
+  const [page, setPage] = React.useState(0);
+  const [dense, setDense] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -120,89 +157,88 @@ const OtaInfoTable = props => {
     setPage(0);
   };
 
+  const handleChangeDense = (event) => {
+    setDense(event.target.checked);
+  };
+
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
-      <CardContent className={classes.content}>
-        <PerfectScrollbar>
-          <div className={classes.inner}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedUsers.length === otaInfo.filteredItems.length}
-                      color="primary"
-                      indeterminate={
-                        selectedUsers.length > 0 &&
-                        selectedUsers.length < otaInfo.filteredItems.length
-                      }
-                      onChange={handleSelectAll}
-                    />
-                  </TableCell>
-                  <TableCell>Live</TableCell>
-                  <TableCell>Version Name</TableCell>
-                  <TableCell>Version Code</TableCell>
-                  <TableCell>Minimum Supported App Code</TableCell>
-                  <TableCell>Date</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {otaInfo.filteredItems
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(ota => (
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <EnhancedTableToolbar otaInfo={otaInfo} />
+        <TableContainer>
+          <Table
+            aria-label="enhanced table"
+            aria-labelledby="tableTitle"
+            className={classes.table}
+            size={dense ? 'small' : 'medium'}
+          >
+            <EnhancedTableHead
+              classes={classes}
+              onRequestSort={handleRequestSort}
+              order={order}
+              orderBy={orderBy}
+              rowCount={rows.length}
+            />
+            <TableBody>
+              {stableSort(rows, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  const labelId = `enhanced-table-checkbox-${index}`;
+
+                  return (
                     <TableRow
-                      className={classes.tableRow}
                       hover
-                      key={ota.id}
-                      selected={selectedUsers.indexOf(ota.id) !== -1}
+                      key={row.id}
+                      role="checkbox"
+                      tabIndex={-1}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={selectedUsers.indexOf(ota.id) !== -1}
-                          color="primary"
-                          onChange={event => handleSelectOne(event, ota.id)}
-                          value="true"
-                        />
-                      </TableCell>
-                      <TableCell>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                      >
                         <SpanUtility
-                          color={ota.live ? `${theme.palette.success.main}` : `${theme.palette.error.main}`}
+                          color={row.live ? `${theme.palette.success.main}` : `${theme.palette.error.main}`}
                         >
-                          {` ${capFirst(ota.live.toString())}`}
+                          {` ${capFirst(row.live.toString())}`}
                         </SpanUtility>
                       </TableCell>
-                      <TableCell>{ota.versionName}</TableCell>
-                      <TableCell>{ota.versionCode}</TableCell>
-                      <TableCell>{ota.minimumSupportedAppVersionCode}</TableCell>
-                      <TableCell>{moment(ota.created).format('DD/MM/YYYY')}</TableCell>
+                      <TableCell align="right">{row.versionName}</TableCell>
+                      <TableCell align="right">{row.versionCode}</TableCell>
+                      <TableCell align="right">{row.minimumSupportedAppVersionCode}</TableCell>
+                      <TableCell align="right">{moment(row.created).format('DD/MM/YYYY')}</TableCell>
                     </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </div>
-        </PerfectScrollbar>
-      </CardContent>
-      <CardActions className={classes.actions}>
+                  );
+                })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
         <TablePagination
           component="div"
-          count={otaInfo.filteredItems.length}
+          count={rows.length}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
           page={page}
           rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[1, 2, 3]}
+          rowsPerPageOptions={[5, 10, 25]}
         />
-      </CardActions>
-    </Card>
+      </Paper>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={dense}
+            onChange={handleChangeDense}
+          />
+        }
+        label="Dense padding"
+      />
+    </div>
   );
-};
-
-OtaInfoTable.propTypes = {
-  className: PropTypes.string,
-  otaInfo: PropTypes.object.isRequired
-};
-
-export default OtaInfoTable;
+}
