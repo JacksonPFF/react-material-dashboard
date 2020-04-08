@@ -12,7 +12,7 @@ import {
   Box,
   Hidden,
 } from '@material-ui/core';
-import { SearchInput, TypographyWithSpacing } from 'components';
+import { SearchInput, TypographyWithSpacing, MuiTableExample } from 'components';
 import { searchFilter } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
@@ -64,8 +64,8 @@ function OtaInfoList(props) {
       >
         <Grid
           item
-          // md={4}
-          // sm={6}
+        // md={4}
+        // sm={6}
         >
           <TypographyWithSpacing
             gutterBottom
@@ -85,9 +85,9 @@ function OtaInfoList(props) {
             > -
             </TypographyWithSpacing>
           </Box>
-          <Box 
+          <Box
             mb={2}
-            width={{ sm: 1/3 }}
+            width={{ sm: 1 / 3 }}
           >
             <SearchInput
               onInput={handleSearchInput}
@@ -110,7 +110,7 @@ function OtaInfoList(props) {
           {/* </Grid> */}
 
           {/* <Grid item> */}
-          {otaInfo.loading && <em>Loading OTA info list...</em>}
+          {/* {otaInfo.loading && <em>Loading OTA info list...</em>}
           {otaInfo.error &&
             <span className="text-danger">
               ERROR:
@@ -118,6 +118,17 @@ function OtaInfoList(props) {
             </span>}
           {otaInfo.filteredItems &&
             <OtaInfoTable otaInfo={otaInfo} />
+          }
+        </Grid>
+        <Grid item> */}
+          {otaInfo.loading && <em>Loading OTA info list...</em>}
+          {otaInfo.error &&
+            <span className="text-danger">
+              ERROR:
+              {otaInfo.error}
+            </span>}
+          {otaInfo.filteredItems &&
+            <MuiTableExample otaInfo={otaInfo} />
           }
         </Grid>
       </Grid>
