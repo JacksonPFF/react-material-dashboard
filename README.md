@@ -21,7 +21,7 @@
 
 ## Documentation
 
-The documentation for the React Material Kit is can be found [here](https://material-ui.com?ref=devias-io).
+The documentation for the React Material Kit can be found [here](https://material-ui.com?ref=devias-io).
 
 
 ## Design Files 🖌

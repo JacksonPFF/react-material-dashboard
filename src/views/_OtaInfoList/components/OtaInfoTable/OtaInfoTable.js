@@ -8,18 +8,44 @@ import {
   Card,
   CardActions,
   CardContent,
-  Avatar,
   Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Typography,
   TablePagination
 } from '@material-ui/core';
 
-import { getInitials } from 'helpers';
+import { SpanUtility } from 'components';
+import { useTheme } from '@material-ui/core/styles';
+import { capFirst } from 'helpers';
+
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -41,22 +67,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UsersTable = props => {
-  const { className, users, ...rest } = props;
+const OtaInfoTable = props => {
+  const { className, otaInfo, ...rest } = props;
 
   const classes = useStyles();
+  const theme = useTheme();
 
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
   const [page, setPage] = useState(0);
 
   const handleSelectAll = event => {
-    const { users } = props;
+    const { otaInfo } = props;
 
     let selectedUsers;
 
     if (event.target.checked) {
-      selectedUsers = users.map(user => user.id);
+      selectedUsers = otaInfo.filteredItems.map(ota => ota.id);
     } else {
       selectedUsers = [];
     }
@@ -84,12 +111,13 @@ const UsersTable = props => {
     setSelectedUsers(newSelectedUsers);
   };
 
-  const handlePageChange = (event, page) => {
-    setPage(page);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
 
-  const handleRowsPerPageChange = event => {
-    setRowsPerPage(event.target.value);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
@@ -105,60 +133,51 @@ const UsersTable = props => {
                 <TableRow>
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedUsers.length === users.length}
+                      checked={selectedUsers.length === otaInfo.filteredItems.length}
                       color="primary"
                       indeterminate={
                         selectedUsers.length > 0 &&
-                        selectedUsers.length < users.length
+                        selectedUsers.length < otaInfo.filteredItems.length
                       }
                       onChange={handleSelectAll}
                     />
                   </TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Location</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell>Registration date</TableCell>
+                  <TableCell>Live</TableCell>
+                  <TableCell>Version Name</TableCell>
+                  <TableCell>Version Code</TableCell>
+                  <TableCell>Minimum Supported App Code</TableCell>
+                  <TableCell>Date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users
+                {otaInfo.filteredItems
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(user => (
+                  .map(ota => (
                     <TableRow
                       className={classes.tableRow}
                       hover
-                      key={user.id}
-                      selected={selectedUsers.indexOf(user.id) !== -1}
+                      key={ota.id}
+                      selected={selectedUsers.indexOf(ota.id) !== -1}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
-                          checked={selectedUsers.indexOf(user.id) !== -1}
+                          checked={selectedUsers.indexOf(ota.id) !== -1}
                           color="primary"
-                          onChange={event => handleSelectOne(event, user.id)}
+                          onChange={event => handleSelectOne(event, ota.id)}
                           value="true"
                         />
                       </TableCell>
                       <TableCell>
-                        <div className={classes.nameContainer}>
-                          <Avatar
-                            className={classes.avatar}
-                            src={user.avatarUrl}
-                          >
-                            {getInitials(user.name)}
-                          </Avatar>
-                          <Typography variant="body1">{user.name}</Typography>
-                        </div>
+                        <SpanUtility
+                          color={ota.live ? `${theme.palette.success.main}` : `${theme.palette.error.main}`}
+                        >
+                          {` ${capFirst(ota.live.toString())}`}
+                        </SpanUtility>
                       </TableCell>
-                      <TableCell>{user.email}</TableCell>
-                      <TableCell>
-                        {user.address.city}, {user.address.state},{' '}
-                        {user.address.country}
-                      </TableCell>
-                      <TableCell>{user.phone}</TableCell>
-                      <TableCell>
-                        {moment(user.createdAt).format('DD/MM/YYYY')}
-                      </TableCell>
+                      <TableCell>{ota.versionName}</TableCell>
+                      <TableCell>{ota.versionCode}</TableCell>
+                      <TableCell>{ota.minimumSupportedAppVersionCode}</TableCell>
+                      <TableCell>{moment(ota.created).format('DD/MM/YYYY')}</TableCell>
                     </TableRow>
                   ))}
               </TableBody>
@@ -169,21 +188,21 @@ const UsersTable = props => {
       <CardActions className={classes.actions}>
         <TablePagination
           component="div"
-          count={users.length}
-          onChangePage={handlePageChange}
-          onChangeRowsPerPage={handleRowsPerPageChange}
+          count={otaInfo.filteredItems.length}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
           page={page}
           rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[1, 2, 3]}
         />
       </CardActions>
     </Card>
   );
 };
 
-UsersTable.propTypes = {
+OtaInfoTable.propTypes = {
   className: PropTypes.string,
-  users: PropTypes.array.isRequired
+  otaInfo: PropTypes.object.isRequired
 };
 
-export default UsersTable;
+export default OtaInfoTable;

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { otaInfoConstants } from '_constants';
-import { OtaInfoListItem } from './components';
+import { OtaInfoListItem, OtaInfoTable } from './components';
 
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -64,8 +64,8 @@ function OtaInfoList(props) {
       >
         <Grid
           item
-          md={3}
-          sm={6}
+          // md={4}
+          // sm={6}
         >
           <TypographyWithSpacing
             gutterBottom
@@ -85,14 +85,17 @@ function OtaInfoList(props) {
             > -
             </TypographyWithSpacing>
           </Box>
-          <Box mb={2}>
+          <Box 
+            mb={2}
+            width={{ sm: 1/3 }}
+          >
             <SearchInput
               onInput={handleSearchInput}
               placeholder="Search for..."
               type="text"
             />
           </Box>
-          {otaInfo.loading && <em>Loading OTA info list...</em>}
+          {/* {otaInfo.loading && <em>Loading OTA info list...</em>}
           {otaInfo.error &&
             <span className="text-danger">
               ERROR:
@@ -103,20 +106,20 @@ function OtaInfoList(props) {
               <List>
                 <OtaInfoListItem otaInfo={otaInfo} />
               </List>
-            </div>}
-        </Grid>
+            </div>} */}
+          {/* </Grid> */}
 
-        <Hidden smDown>
-          <Grid
-            item
-            md={3}
-          />
-        </Hidden>
-        <Grid
-          item
-          md={3}
-          sm={6}
-        />
+          {/* <Grid item> */}
+          {otaInfo.loading && <em>Loading OTA info list...</em>}
+          {otaInfo.error &&
+            <span className="text-danger">
+              ERROR:
+              {otaInfo.error}
+            </span>}
+          {otaInfo.filteredItems &&
+            <OtaInfoTable otaInfo={otaInfo} />
+          }
+        </Grid>
       </Grid>
     </div>
   );
