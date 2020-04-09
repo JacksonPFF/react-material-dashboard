@@ -3,17 +3,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { registeredGitasActions } from '_actions';
 import { skipCodeConstants } from '_constants';
-import { RegisteredGitasListItem } from './components';
 import { searchFilter } from 'helpers';
-
+import { RegisteredGitasTable } from 'views/RegisteredGitasList/components';
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
-  List,
+  Card,
+  CardContent,
   Box,
-  Hidden,
 } from '@material-ui/core';
-import { SearchInput, TypographyWithSpacing } from 'components';
+import { TypographyWithSpacing } from 'components';
 
 
 const useStyles = makeStyles(theme => ({
@@ -58,35 +57,8 @@ function HomePage(props) {
       >
         <Grid
           item
-          md={3}
-          sm={6}
+          sm={8}
         >
-          <TypographyWithSpacing
-            gutterBottom
-            variant="h4"
-          >
-            Registered Gitas
-          </TypographyWithSpacing>
-          <TypographyWithSpacing
-            variant="subtitle2"
-          >
-            From secure api endpoint
-          </TypographyWithSpacing>
-          <Box visibility="hidden">
-            <TypographyWithSpacing
-              gutterBottom
-              variant="subtitle2"
-            > -
-            </TypographyWithSpacing>
-          </Box>
-          <Box mb={2}>
-            <SearchInput
-              onInput={handleSearchInput}
-              placeholder="Search for..."
-              type="text"
-            />
-          </Box>
-
           {registeredGitas.loading && <em>Loading registered gitas...</em>}
           {registeredGitas.error &&
             <span className="text-danger">
@@ -94,45 +66,43 @@ function HomePage(props) {
               {registeredGitas.error}
             </span>}
           {registeredGitas.filteredItems &&
-            <div>
-              <List>
-                <RegisteredGitasListItem registeredGitas={registeredGitas} />
-              </List>
-            </div>}
+            <Box maxWidth={1200}>
+              <RegisteredGitasTable registeredGitas={registeredGitas} />
+            </Box>
+          }
         </Grid>
-        <Hidden smDown>
-          <Grid
-            item
-            md={3}
-          />
-        </Hidden>
         <Grid
           item
-          md={3}
-          sm={6}
+          sm={4}
         >
-          <TypographyWithSpacing
-            gutterBottom
-            variant="h4"
-          >
-            Wifi Skip Code
-          </TypographyWithSpacing>
-          <TypographyWithSpacing
-            variant="subtitle2"
-          >
-            Updates every 15 minutes.
-          </TypographyWithSpacing>
-          <TypographyWithSpacing
-            gutterBottom
-            variant="subtitle2"
-          >
-            Valid for 30 minutes.
-          </TypographyWithSpacing>
-          <TypographyWithSpacing
-            variant="h1"
-          >
-            <b>{skipCode.data}</b>
-          </TypographyWithSpacing>
+          <Box maxWidth={300}>
+            <Card>
+              <CardContent>
+                <TypographyWithSpacing
+                  gutterBottom
+                  variant="h4"
+                >
+                  Wifi Skip Code
+                </TypographyWithSpacing>
+                <TypographyWithSpacing
+                  variant="subtitle2"
+                >
+                  Updates every 15 minutes.
+                </TypographyWithSpacing>
+                <TypographyWithSpacing
+                  gutterBottom
+                  variant="subtitle2"
+                >
+                  Valid for 30 minutes.
+                </TypographyWithSpacing>
+                <TypographyWithSpacing
+                  variant="h1"
+                >
+                  <b>{skipCode.data}</b>
+                </TypographyWithSpacing>
+              </CardContent>
+            </Card>
+          </Box>
         </Grid>
       </Grid>
     </div>

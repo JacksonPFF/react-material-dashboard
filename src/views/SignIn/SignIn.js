@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { userActions } from '../../_actions';
-
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -11,10 +10,10 @@ import {
   Button,
   IconButton,
   TextField,
-  Link,
   Typography
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Alert from '@material-ui/lab/Alert';
 
 const schema = {
   email: {
@@ -128,7 +127,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history, alert, loggingIn, user, dispatch } = props;
+  const { history, alert, user, dispatch } = props;
 
   const classes = useStyles();
 
@@ -266,19 +265,12 @@ const SignIn = props => {
                 >
                   Sign in now
                 </Button>
-                {/* <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Don't have an account?{' '}
-                  <Link
-                    component={RouterLink}
-                    to="/sign-up"
-                    variant="h6"
-                  >
-                    Sign up
-                  </Link>
-                </Typography> */}
+                {alert.message &&
+                  <Alert severity="error">
+                    {alert.message}
+                  </Alert>
+                  // <div className={`alert ${alert.type}`}>{alert.message}</div>
+                }
               </form>
             </div>
           </div>
@@ -288,30 +280,7 @@ const SignIn = props => {
           item
           lg={5}
         >
-          <div className={classes.quote}>
-            {/* <div className={classes.quoteInner}>
-              <Typography
-                className={classes.quoteText}
-                variant="h1"
-              >
-                Welcome to the PFF Admin Portal
-              </Typography>
-              <div className={classes.person}>
-                <Typography
-                  className={classes.name}
-                  variant="body1"
-                >
-                  Takamaru Ayako
-                </Typography>
-                <Typography
-                  className={classes.bio}
-                  variant="body2"
-                >
-                  Manager at inVision
-                </Typography>
-              </div>
-            </div> */}
-          </div>
+          <div className={classes.quote} />
         </Grid>
       </Grid>
     </div>
@@ -322,14 +291,11 @@ SignIn.propTypes = {
   history: PropTypes.object
 };
 
-
 function mapStateToProps(state) {
   const { alert } = state;
-  const { loggingIn } = state.authentication;
   const { user } = state.authentication;
   return {
     alert,
-    loggingIn,
     user,
   };
 }
