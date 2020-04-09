@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { registeredGitasActions } from '_actions';
 import { skipCodeConstants } from '_constants';
-import { searchFilter } from 'helpers';
 import { RegisteredGitasTable } from 'views/RegisteredGitasList/components';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -38,15 +37,6 @@ function HomePage(props) {
       dispatch({ type: skipCodeConstants.SKIPCODE_POLL_STOP });
     };
   }, []); // execute only once
-
-  function handleSearchInput(e) {
-    const searchText = e.target.value;
-    const results = {};
-    // Registered Gitas in redux state
-    results.gitas = searchFilter(searchText, registeredGitas.items);
-    // update store with filtered list
-    dispatch(registeredGitasActions.filterItems(results));
-  }
 
   return (
     <div className={classes.root}>
