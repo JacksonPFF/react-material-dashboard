@@ -1,4 +1,5 @@
 import { registeredGitasConstants } from '../_constants';
+import moment from 'moment';
 
 export function registeredGitas(state = {}, action) {
   switch (action.type) {
@@ -7,6 +8,10 @@ export function registeredGitas(state = {}, action) {
         loading: true,
       };
     case registeredGitasConstants.GETALL_SUCCESS:
+      action.gitas.map((item) => {
+        item.created = moment(item.created).format('DD/MM/YYYY');
+        return item;
+      })
       return {
         items: action.gitas,
       };

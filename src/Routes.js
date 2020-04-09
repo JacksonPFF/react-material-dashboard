@@ -5,18 +5,10 @@ import { ProtectedRouteWithLayout, RouteWithLayout } from './components';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
 import {
-  Dashboard as DashboardView,
-  ProductList as ProductListView,
-  UserList as UserListView,
-  Typography as TypographyView,
-  Icons as IconsView,
-  Account as AccountView,
-  Settings as SettingsView,
-  SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView,
-  // Custom Views
   OtaInfoList as OtaInfoListView,
+  RegisteredGitasList as RegisteredGitasListView,
   HomePage as HomePageView
 } from './views';
 
@@ -41,59 +33,16 @@ const Routes = () => {
         path="/dashboard"
       />
       <ProtectedRouteWithLayout
+        component={RegisteredGitasListView}
+        exact
+        layout={MainLayout}
+        path="/registered-gitas"
+      />      
+      <ProtectedRouteWithLayout
         component={OtaInfoListView}
         exact
         layout={MainLayout}
         path="/ota-info"
-      />
-
-      <ProtectedRouteWithLayout
-        component={DashboardView}
-        exact
-        layout={MainLayout}
-        path="/theme-dashboard"
-      />
-      <ProtectedRouteWithLayout
-        component={UserListView}
-        exact
-        layout={MainLayout}
-        path="/users"
-      />
-      <ProtectedRouteWithLayout
-        component={ProductListView}
-        exact
-        layout={MainLayout}
-        path="/products"
-      />
-      <ProtectedRouteWithLayout
-        component={TypographyView}
-        exact
-        layout={MainLayout}
-        path="/typography"
-      />
-      <ProtectedRouteWithLayout
-        component={IconsView}
-        exact
-        layout={MainLayout}
-        path="/icons"
-      />
-      <ProtectedRouteWithLayout
-        component={AccountView}
-        exact
-        layout={MainLayout}
-        path="/account"
-      />
-      <ProtectedRouteWithLayout
-        component={SettingsView}
-        exact
-        layout={MainLayout}
-        path="/settings"
-      />
-      <ProtectedRouteWithLayout
-        component={SignUpView}
-        exact
-        layout={MinimalLayout}
-        path="/sign-up"
       />
       <RouteWithLayout
         component={NotFoundView}

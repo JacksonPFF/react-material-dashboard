@@ -1,4 +1,5 @@
 import { otaInfoConstants } from '../_constants';
+import moment from 'moment';
 
 export function otaInfo(state = {}, action) {
   switch (action.type) {
@@ -7,6 +8,10 @@ export function otaInfo(state = {}, action) {
         loading: true,
       };
     case otaInfoConstants.GETALL_SUCCESS:
+      action.items.map((item) => {
+        item.created = moment(item.created).format('DD/MM/YYYY');
+        return item;
+      })
       return {
         items: action.items,
       };
